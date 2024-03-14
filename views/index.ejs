@@ -5,12 +5,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Newsletter Subscription</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h2>Subscribe to Our Newsletter</h2>
-    <form action="/subscribe" method="POST">
-        <input type="email" name="email" placeholder="Enter your email" required>
-        <button type="submit">Subscribe</button>
-    </form>
+<body >
+    <div class="2xl:mx-auto 2xl:container mx-4 py-16">
+        <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
+        <div class="w-full relative flex items-center justify-center">
+          <img src="https://i.ibb.co/4sYZ8gC/img-2.png" alt="dining" class="w-full h-full absolute z-0 hidden xl:block" />
+          <img src="https://i.ibb.co/bbS3J9C/pexels-max-vakhtbovych-6301182-1.png" alt="dining" class="w-full h-full absolute z-0 hidden sm:block xl:hidden" />
+          <img src="https://i.ibb.co/JKkzGDs/pexels-max-vakhtbovych-6301182-1.png" alt="dining" class="w-full h-full absolute z-0 sm:hidden" />
+          <div class="bg-gray-800 bg-opacity-80 md:my-16 lg:py-16 py-10 w-full md:mx-24 md:px-12 px-4 flex flex-col items-center justify-center relative z-40">
+            <h1 class="text-4xl font-semibold leading-9 text-white text-center">Don’t miss out!</h1>
+            <p class="text-base leading-normal text-center text-white mt-6">
+              Subscribe to your newsletter to stay in the loop. Our newsletter is sent once in <br />
+              a week on every friday so subscribe to get latest news and updates.
+            </p>
+            <form id="subscribeForm" >
+            <div class="sm:border border-white flex-col sm:flex-row flex items-center lg:w-5/12 w-full mt-12 space-y-4 sm:space-y-0">
+              <input id="emailInput" name="email" class="border border-white sm:border-transparent text-base w-full font-medium leading-none text-white p-4 focus:outline-none bg-transparent placeholder-white" placeholder="Email Address" />
+              <button  type="button" id="subscribeButton" class="focus:outline-none focus:ring-offset-2 focus:ring border border-white sm:border-transparent w-full sm:w-auto bg-white py-4 px-6 hover:bg-opacity-75">Subscribe</button>
+            </div>
+        </form>
+          </div>
+        </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+      <script>
+        document.getElementById('subscribeButton').addEventListener('click', function() {
+            var email = document.getElementById('emailInput').value;
+    
+            if (!email.trim()) {
+                alert('Please enter your email address.');
+                return;
+            }
+    
+            axios.post('/subscribe', { email: email })
+                .then(function(response) {
+                    // Handle success
+                    if (response && response.data && response.data.message) {
+                        alert(response.data.message);
+                    } else {
+                        alert('Subscription successful!');
+                    }
+                })
+                .catch(function(error) {
+                    // Handle error
+                    console.error(error);
+                    if (error.response && error.response.status === 400 && error.response.data && error.response.data.message === 'Email address already subscribed.') {
+                        alert('Email address is already subscribed.');
+                    } else {
+                        alert('An error occurred. Please try again later.');
+                    }
+                });
+        });
+    </script>
+    
+    
 </body>
 </html>

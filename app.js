@@ -10,6 +10,9 @@ var usersRouter = require('./routes/users');
 // const exphbs  = require('express-handlebars');
 
 const app = express();
+// Add body parsing middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // app.engine('handlebars', exphbs());
 // app.set('view engine', 'handlebars');
